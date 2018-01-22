@@ -12,7 +12,3 @@ export const store = createStore(
 )
 
 sagaMiddleware.run(mySaga)
-
-
-
-

@@ -69,7 +69,7 @@ export function* fetchPerson(action) {
         let err = {f: true, l: true, y: true}
         yield put({type: TYPES.SHOW_INPUT_ERROR, err});
       }else {
-        const person = yield call(api, `http://localhost:5000/player?api_key=T7Dvdf2zxtyO9IiGs8rR4AQeC61mPpKE&first_name=${action.fname}&last_name=${action.lname}`);
+        const person = yield call(api, `http://10.16.7.38:5000/player?api_key=TRKfInZOuCY6UvjFLWPxDq70rVHaA8yJ&first_name=${action.fname}&last_name=${action.lname}`);
         yield put({type: TYPES.FETCH_PLAYER_ID_SUCCESS, data: person});
         let pl_id = person.map(person => person.id);
         let pl_name = person.map(person => person.player_name);
@@ -98,13 +98,15 @@ export function* fetchPerson(action) {
 export function* fetchStats(action) {
   //console.log(action, 'fetch stats');
   try{
-    const stats = yield call(api, `http://localhost:5000/boxscore?api_key=T7Dvdf2zxtyO9IiGs8rR4AQeC61mPpKE&player_id=${action.data.id}&year=${action.data.year}`);
+    const stats = yield call(api, `http://10.16.7.38:5000/boxscore?api_key=TRKfInZOuCY6UvjFLWPxDq70rVHaA8yJ&player_id=${action.data.id}&year=${action.data.year}`);
     yield put({type: TYPES.FETCH_PLAYER_STATS_SUCCESS, data: stats});
     //console.log(stats);
     let data = { name: action.data.name, year: action.data.year }
     yield put({type: TYPES.FETCH_PLAYER_NAME_YEAR, data: data});
     let resultsComp = true
     yield put({type: TYPES.HIDE_RESULTS_COMP, data: resultsComp});
+    let err = {f: false, l: false, y: false}
+    yield put({type: TYPES.SHOW_INPUT_ERROR, err});
 
   } catch (e) {
     let data = false
